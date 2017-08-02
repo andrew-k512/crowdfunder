@@ -19,10 +19,10 @@ class PledgeTest < ActiveSupport::TestCase
     project = new_project
     project.owner = owner
     project.save
-    pledge = Pledge.new(dollar_amount: 3.00, project: project)
+    pledge = Pledge.new(dollar_amount: 3.00, project: project, user: owner)
     pledge.user = owner
     pledge.save
-    assert pledge.invalid?, 'Owner should not be able to pledge towards own project'
+    assert pledge.invalid? #checks that error is returned by customized method
   end
 
   def new_project
