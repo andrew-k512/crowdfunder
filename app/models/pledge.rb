@@ -5,3 +5,4 @@ class Pledge < ApplicationRecord
   validates :dollar_amount, presence: true
   validates :user, presence: true
 end
+  
