@@ -25,6 +25,20 @@ class PledgeTest < ActiveSupport::TestCase
     assert pledge.invalid? #checks that error is returned by customized method
   end
 
+#------------- My tests --------------------------------------#
+  test 'a pledge must have dollar_amount' do
+    user1 = new_user
+    user1.save
+    project = new_project
+    project.save
+    pledge = Pledge.new(project: project, user: user1)
+    pledge.save
+    assert pledge.valid? #checks that error is returned by customized method
+  end
+
+
+#------------ End of My tests --------------------------------#
+
   def new_project
     Project.new(
       title:       'Cool new boardgame',
