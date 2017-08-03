@@ -31,8 +31,9 @@ class ProjectTest < ActiveSupport::TestCase
    # set new_project start_date to past_date
    project.start_date = Time.utc(2000,"jan",1,20,15,1)
    project.save
+  #  if project.start_date < Date.today
 
-  assert project.invalid?
+  assert_equal(project.start_date < Date.today, true)
   # project.errors.messages
 
   end
@@ -45,13 +46,25 @@ class ProjectTest < ActiveSupport::TestCase
   project = new_project
   project.owner = owner
 
-   # set new_project start_date to past_date
+   # set new_project start_date & end_date as same
    project.start_date = Time.utc(2020,"jan",1,20,15,1)
    project.end_date = Time.utc(2020,"jan",1,20,15,1)
    project.save
 
-  assert project.invalid?
+  assert_equal(project.start_date <= project.end_date, true)
+  end
 
+  test 'project goal must be positive number' do
+    # arrange
+    owner = new_user
+    owner.save
+    project = new_project
+    project.owner = owner
+    project.goal = 1
+    project.save
+
+    # assert
+    assert_equal(project.goal > 0, true)
   end
 
 

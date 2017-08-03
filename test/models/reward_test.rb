@@ -2,6 +2,26 @@ require 'test_helper'
 
 class RewardTest < ActiveSupport::TestCase
 
+  #-------------------My tests--------------------------------#
+
+  test 'reward dollar_amount must be positive number' do
+    # arrange
+    project = new_project
+    project.save
+    reward1 = new_reward
+    reward1.dollar_amount = 1
+    reward1.project = project
+    reward1.save
+
+    # assert
+    assert_equal(reward1.dollar_amount > 0, true)
+  end
+
+
+
+
+  #-------------------------------------------------------------#
+
   test 'A reward can be created' do
     project = new_project
     project.save
@@ -43,6 +63,13 @@ class RewardTest < ActiveSupport::TestCase
       start_date:  Date.today,
       end_date:    Date.today + 1.month,
       goal:        50000
+    )
+  end
+
+  def new_reward
+    Reward.new(
+      description:       'Cool new reward',
+      dollar_amount: 100
     )
   end
 
