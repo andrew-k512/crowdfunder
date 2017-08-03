@@ -2,16 +2,16 @@ require 'test_helper'
 
 class ProjectTest < ActiveSupport::TestCase
 
-  test 'valid project can be created' do
-    owner = new_user
-    owner.save
-    project = new_project
-    project.owner = owner
-    project.save
-    assert project.valid?
-    assert project.persisted?
-    assert project.owner
-  end
+  # test 'valid project can be created' do
+  #   owner = new_user
+  #   owner.save
+  #   project = new_project
+  #   project.owner = owner
+  #   project.save
+  #   assert project.valid?
+  #   assert project.persisted?
+  #   assert project.owner
+  # end
 
   test 'project is invalid without owner' do
     project = new_project
@@ -19,6 +19,44 @@ class ProjectTest < ActiveSupport::TestCase
     project.save
     assert project.invalid?, 'Project should not save without owner.'
   end
+#-------------My tests ---------------------------------#
+
+  test 'project is invalid if start_date in the past' do
+   # instantiate new_user and new_project
+  owner = new_user
+  owner.save
+  project = new_project
+  project.owner = owner
+
+   # set new_project start_date to past_date
+   project.start_date = Time.utc(2000,"jan",1,20,15,1)
+   project.save
+
+  assert project.invalid?
+  # project.errors.messages
+
+  end
+
+
+  test 'project end_date must be later than start_date' do
+   # instantiate new_user and new_project
+  owner = new_user
+  owner.save
+  project = new_project
+  project.owner = owner
+
+   # set new_project start_date to past_date
+   project.start_date = Time.utc(2020,"jan",1,20,15,1)
+   project.end_date = Time.utc(2020,"jan",1,20,15,1)
+   project.save
+
+  assert project.invalid?
+
+  end
+
+
+#----------------------------------------------------------
+
 
   def new_project
     Project.new(

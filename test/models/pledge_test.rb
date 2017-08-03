@@ -33,7 +33,7 @@ class PledgeTest < ActiveSupport::TestCase
     project.save
     pledge = Pledge.new(project: project, user: user1)
     pledge.save
-    assert pledge.valid? #checks that error is returned by customized method
+    assert pledge.invalid? #checks that error is returned by customized method
   end
 
 
